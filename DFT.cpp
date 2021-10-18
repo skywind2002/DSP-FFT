@@ -31,6 +31,8 @@ int main()
 
   for (k = 0; k < n; k++)
     cout << X[k] << endl;
-  system("pause");
+
+  delete[] x;
+  delete[] X;
   return 0;
 }
