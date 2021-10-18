@@ -1,4 +1,5 @@
 #define PI 3.1415926545
+#define MIN 1e-6
 #include <iostream>
 #include <math.h>
 using namespace std;
@@ -116,7 +117,21 @@ const complex operator/(const complex &c1, const complex &c2)
 
 ostream &operator<<(ostream &output, const complex &c)
 {
-  output << c.r << '+' << c.i << 'j' << endl;
+  if (abs(c.i) > MIN)
+  {
+    if (abs(c.r) > MIN)
+      output << c.r << '+' << c.i << 'j' << endl;
+    else
+      output << c.i << 'j' << endl;
+  }
+  else
+  {
+    if (abs(c.r) > MIN)
+      output << c.r << endl;
+    else
+      output << c.r << " " << c.i << endl;
+  }
+  //注意小量忽略
   return output;
 }
 
@@ -129,9 +144,4 @@ istream &operator>>(istream &input, complex &c)
   else
     c = complex(re, im);
   return input;
-}
-
-int main()
-{
-  return 0;
 }
