@@ -129,7 +129,7 @@ ostream &operator<<(ostream &output, const complex &c)
     if (abs(c.r) > MIN)
       output << c.r << endl;
     else
-      output << c.r << " " << c.i << endl;
+      output << 0 << endl;
   }
   //注意小量忽略
   return output;

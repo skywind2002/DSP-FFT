@@ -1,0 +1,77 @@
+// 通用基2FFT程序 采用DIF的形式
+#include <iostream>
+#include <math.h>
+#include "complex.h"
+using namespace std;
+
+int main()
+{
+  int len;
+  int i, j, k;
+  int dist, shifting;
+  cout << "Please input the DFT sequence length:\n";
+  cin >> len;
+  if (pow(2, int(log2(len))) != len)
+  {
+    cout << "2-base DFT cannot deal with this sequence!\n";
+    exit(0);
+  }                  //首先排除变换点数非2的幂次的情况,下面开始真正的FFT
+  int r = log2(len); //蝶形迭代级数
+
+  complex *W, *X1, *X2, *X, *result;
+
+  W = new complex[len / 2];
+  X1 = new complex[len];
+  X2 = new complex[len];     //预先分配中转寄存器
+  result = new complex[len]; //结果寄存器
+
+  for (i = 0; i < len / 2; i++)
+  {
+    W[i] = complex(cos(-i * PI * 2 / len), sin(-i * PI * 2 / len)); //计算旋转因子
+  }
+
+  // 输入变换序列X1
+  for (i = 0; i < len; i++)
+  {
+    X1[i] = complex(i, 0);
+  }
+
+  // TODO
+  for (k = 0; k < r; k++) //进行k级计算
+  {
+    for (j = 0; j < 1 << k; j++) //每一级有(1<<k)组蝶形运算
+    {
+      dist = (1 << (r - k));         //两个数据点的距离
+      for (i = 0; i < dist / 2; i++) //蝶形运算的次数
+      {
+        shifting = j * dist; //计算蝶形偏移量
+        X2[i + shifting] = X1[i + shifting] + X1[i + shifting + dist / 2];
+        X2[i + shifting + dist / 2] = (X1[i + shifting] - X1[i + shifting + dist / 2]) * W[i * (1 << k)]; //乘以旋转因子
+      }
+    }
+    X = X1;
+    X1 = X2;
+    X2 = X;
+  }
+
+  for (i = 0; i < len; i++) //倒位序重新排列
+  {
+    int p = 0;
+    for (j = 0; j < r; j++)
+    {
+      if (i & (1 << j))
+        p += 1 << (r - j - 1);
+    }
+    result[i] = X1[p];
+  }
+
+  for (i = 0; i < len; i++)
+    cout << result[i] << endl;
+
+  delete[] X;
+  delete[] X1;
+  delete[] X2;
+  delete[] W;
+  delete[] result;
+  return 0;
+}
