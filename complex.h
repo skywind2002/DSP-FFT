@@ -2,6 +2,7 @@
 #define MIN 1e-6
 #include <iostream>
 #include <math.h>
+#include <iomanip>
 using namespace std;
 
 class complex
@@ -120,16 +121,21 @@ ostream &operator<<(ostream &output, const complex &c)
   if (abs(c.i) > MIN)
   {
     if (abs(c.r) > MIN)
-      output << c.r << '+' << c.i << 'j' << endl;
+    {
+      if (c.i > 0)
+        output << setprecision(4) << c.r << '+' << c.i << 'j';
+      else
+        output << c.r << c.i << 'j';
+    }
     else
-      output << c.i << 'j' << endl;
+      output << c.i << 'j';
   }
   else
   {
     if (abs(c.r) > MIN)
-      output << c.r << endl;
+      output << c.r;
     else
-      output << 0 << endl;
+      output << 0;
   }
   //注意小量忽略
   return output;
