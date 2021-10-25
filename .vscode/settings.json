@@ -6,6 +6,7 @@
     "*.wxss": "css",
     "iostream": "cpp",
     "ostream": "cpp",
-    "complex": "cpp"
+    "complex": "cpp",
+    "new": "cpp"
   }
 }

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <math.h>
 #include <iomanip>
+#pragma once
 using namespace std;
 
 class complex
