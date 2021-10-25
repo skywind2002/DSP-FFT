@@ -5,23 +5,26 @@
 #include "complex.h"
 using namespace std;
 
-void DFT(complex *x,int len,int sign)
+void DFT(complex *x, int len, int sign)
 {
   int n, k;
-  complex *X=new complex[len];
+  complex *X = new complex[len];
 
   for (k = 0; k < len; k++)
   {
     complex sum; //预备DFT/IDFT右边式子的求和
     for (n = 0; n < len; n++)
     {
-      sum += x[n] * (sign==-1 ? complex(cos(2 * PI * n * k / len), -sin(2 * PI * n * k / len)) : complex(cos(2 * PI * n * k / len), sin(2 * PI * n * k / len)));
+      sum += x[n] * (sign == -1 ? complex(cos(2 * PI * n * k / len), -sin(2 * PI * n * k / len)) : complex(cos(2 * PI * n * k / len), sin(2 * PI * n * k / len)));
     }
     X[k] = sum;
   }
 
   for (k = 0; k < n; k++)
-    cout << (sign == -1 ? X[k] : X[k] / complex(len, 0)) << endl; //IDFT要除以N
+  {
+    x[k] = (sign == -1 ? X[k] : X[k] / complex(len, 0));
+    cout << x[k] << endl; //IDFT要除以N
+  }
 
   delete[] X;
 }
