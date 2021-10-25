@@ -123,7 +123,7 @@ ostream &operator<<(ostream &output, const complex &c)
     if (abs(c.r) > MIN)
     {
       if (c.i > 0)
-        output << setprecision(4) << c.r << '+' << c.i << 'j';
+        output << c.r << '+' << c.i << 'j';
       else
         output << c.r << c.i << 'j';
     }

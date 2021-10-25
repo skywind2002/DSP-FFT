@@ -1,4 +1,4 @@
-// 通用基2FFT程序 采用DIF的形式
+// 通用基2FFT程序 采用DIT的形式
 #include <iostream>
 #include <math.h>
 #include "complex.h"
@@ -36,13 +36,12 @@ int main()
     X1[i] = complex(i, 0);
   }
 
-  // TODO
-  for (k = 0; k < r; k++) //进行k级计算
+  for (k = 0; k < r; k++) //进行r级计算
   {
     for (j = 0; j < 1 << k; j++) //每一级有(1<<k)组蝶形运算
     {
-      dist = (1 << (r - k));         //两个数据点的距离
-      for (i = 0; i < dist / 2; i++) //蝶形运算的次数
+      dist = (1 << (r - k));         //蝶形之间两个点的距离*2，也是相邻组蝶形之间的距离
+      for (i = 0; i < dist / 2; i++) //每组中蝶形运算的次数
       {
         shifting = j * dist; //计算蝶形偏移量
         X2[i + shifting] = X1[i + shifting] + X1[i + shifting + dist / 2];
