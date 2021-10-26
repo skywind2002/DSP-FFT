@@ -15,11 +15,15 @@ void DIF_FFT(complex *Input, int len, int sign)
   }                  //首先排除变换点数非2的幂次的情况,下面开始真正的FFT
   int r = log2(len); //蝶形迭代级数
 
-  complex *W, *X2, *X, *result;
+  complex *W, *X1, *X2, *X, *result;
 
   W = new complex[len / 2];
+  X1 = new complex[len];
   X2 = new complex[len];     //预先分配中转寄存器
   result = new complex[len]; //结果寄存器
+
+  for (i = 0; i < len; i++)
+    X1[i] = Input[i];
 
   for (i = 0; i < len / 2; i++)
   {
@@ -34,12 +38,12 @@ void DIF_FFT(complex *Input, int len, int sign)
       for (i = 0; i < dist / 2; i++) //每组中蝶形运算的次数
       {
         shifting = j * dist; //计算蝶形偏移量
-        X2[i + shifting] = Input[i + shifting] + Input[i + shifting + dist / 2];
-        X2[i + shifting + dist / 2] = (Input[i + shifting] - Input[i + shifting + dist / 2]) * W[i * (1 << k)]; //乘以旋转因子
+        X2[i + shifting] = X1[i + shifting] + X1[i + shifting + dist / 2];
+        X2[i + shifting + dist / 2] = (X1[i + shifting] - X1[i + shifting + dist / 2]) * W[i * (1 << k)]; //乘以旋转因子
       }
     }
-    X = Input;
-    Input = X2;
+    X = X1;
+    X1 = X2;
     X2 = X;
   }
 
@@ -63,7 +67,11 @@ void DIF_FFT(complex *Input, int len, int sign)
         p += 1 << (r - j - 1);
     }
     if (sign == 1)
-      Input[p] /= complex(len, 0);
-    cout << Input[p] << endl;
+      Input[i] = X1[p] / complex(len, 0);
+    else
+      Input[i] = X1[p];
   }
+
+  /*   for (i = 0; i < len; i++)
+    cout << Input[i] << endl; */
 }

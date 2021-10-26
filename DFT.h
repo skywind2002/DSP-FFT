@@ -23,7 +23,7 @@ void DFT(complex *x, int len, int sign)
   for (k = 0; k < n; k++)
   {
     x[k] = (sign == -1 ? X[k] : X[k] / complex(len, 0));
-    cout << x[k] << endl; //IDFT要除以N
+    //cout << x[k] << endl; //IDFT要除以N
   }
 
   delete[] X;
