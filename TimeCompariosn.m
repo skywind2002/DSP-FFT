@@ -15,7 +15,7 @@ plot(n,TimeofDIF,'-ob');
 title("Time Comparsion of FFT & DFT");
 xlabel("n");
 ylabel("Time/s");
-legend("FFT","DIT-FFT","DIF-FFT");
+legend("DFT","DIT-FFT","DIF-FFT");
 
 
 
