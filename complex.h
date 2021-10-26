@@ -171,3 +171,11 @@ istream &operator>>(istream &input, complex &c)
     c = complex(re, im);
   return input;
 }
+
+void SwapComplex(complex *x1, complex *x2)  //两个复数数组交换函数，用于FFT时的迭代
+{
+  complex *temp;
+  temp = x1;
+  x1 = x2;
+  x2 = temp;
+}
