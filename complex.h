@@ -32,6 +32,9 @@ public:
   complex operator/=(const complex &c);
   complex operator^=(const int x); //带等于号的四则运算与乘方
 
+  friend const bool operator==(const complex &c1, const complex &c2);
+  friend const bool operator!=(const complex &c1, const complex &c2);
+
   friend ostream &operator<<(ostream &output, const complex &c);
   friend istream &operator>>(ostream &input, complex &c); //重构输入输出
 
@@ -115,6 +118,22 @@ const complex operator/(const complex &c1, const complex &c2)
   t1 = complex(c1.r, c1.i) * complex(c2.r, -c2.i);
   double frac = c2.r * c2.r + c2.i * c2.i;
   return complex(t1.r / frac, t1.i / frac);
+}
+
+const bool operator==(const complex &c1, const complex &c2)
+{
+  if (c1.r == c2.r && c1.i == c2.i)
+    return 1;
+  else
+    return 0;
+}
+
+const bool operator!=(const complex &c1, const complex &c2)
+{
+  if (c1.r == c2.r && c1.i == c2.i)
+    return 0;
+  else
+    return 1;
 }
 
 ostream &operator<<(ostream &output, const complex &c)
