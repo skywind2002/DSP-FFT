@@ -52,7 +52,7 @@ int main()
   }
 
   ofstream file;
-  file.open("data.txt");
+  file.open("TimeData.txt");
   for (i = 1; i <= range; i++)
     file << TimeofDFT[i] << " " << TimeofDIT[i] << " " << TimeofDIT[i] << endl;
   file.close();
