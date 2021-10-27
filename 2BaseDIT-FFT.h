@@ -27,7 +27,7 @@ void DIT_FFT(complex *Input, int len, int sign) //DIT-FFT函数,变换+输出 -1
   }                  //首先排除变换点数非2的幂次的情况,下面开始真正的FFT
   int r = log2(len); //蝶形迭代级数
 
-  complex *W, *X1, *X2, *result;
+  complex *W, *X, *X1, *X2, *result;
 
   W = new complex[len / 2];
   X1 = new complex[len];
@@ -54,7 +54,9 @@ void DIT_FFT(complex *Input, int len, int sign) //DIT-FFT函数,变换+输出 -1
         X2[i + shifting + dist / 2] = X1[i + shifting] - X1[i + shifting + dist / 2] * W[reverse(j, r - 1)]; //乘以旋转因子
       }
     }
-    SwapComplex(X1, X2);
+    X = X1;
+    X1 = X2;
+    X2 = X;
   }
 
   for (i = 0; i < len; i++) //倒位序重新排列

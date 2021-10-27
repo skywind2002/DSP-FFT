@@ -1,5 +1,5 @@
 #define PI 3.1415926545
-#define MIN 1e-6
+#define MIN 1e-3
 #include <iostream>
 #include <math.h>
 #include <iomanip>
@@ -122,7 +122,7 @@ const complex operator/(const complex &c1, const complex &c2)
 
 const bool operator==(const complex &c1, const complex &c2)
 {
-  if (c1.r == c2.r && c1.i == c2.i)
+  if (abs(c1.r - c2.r) < MIN && abs(c1.i - c2.i) < MIN)
     return 1;
   else
     return 0;
@@ -130,7 +130,7 @@ const bool operator==(const complex &c1, const complex &c2)
 
 const bool operator!=(const complex &c1, const complex &c2)
 {
-  if (c1.r == c2.r && c1.i == c2.i)
+  if (abs(c1.r - c2.r) < MIN && abs(c1.i - c2.i) < MIN)
     return 0;
   else
     return 1;
@@ -172,10 +172,3 @@ istream &operator>>(istream &input, complex &c)
   return input;
 }
 
-void SwapComplex(complex *x1, complex *x2)  //两个复数数组交换函数，用于FFT时的迭代
-{
-  complex *temp;
-  temp = x1;
-  x1 = x2;
-  x2 = temp;
-}

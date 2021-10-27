@@ -11,7 +11,7 @@ using namespace std;
 int main()
 {
   default_random_engine e;
-  uniform_real_distribution<double> u(-5, 5); //初始化随机数引擎
+  uniform_real_distribution<double> u(-1,1); //初始化随机数引擎
   complex *a, *b, *c;
   int range = 14;                                        //测试长短，在1~range内的蝶形级数都会被运行并且比较
   double TimeofDIT[100], TimeofDIF[100], TimeofDFT[100]; //存储运行时间的矩阵
@@ -23,6 +23,12 @@ int main()
     a = new complex[len];
     b = new complex[len];
     c = new complex[len];
+    for (i = 0; i < len; i++)
+    {
+      a[i] = complex(i, 0);
+      b[i] = a[i];
+      c[i] = a[i];
+    }
     clock_t StartDFT = clock();
     DFT(a, len, -1);
     clock_t EndDFT = clock();
@@ -38,22 +44,12 @@ int main()
     clock_t EndDIF = clock();
     TimeofDIF[r] = (double)(EndDIF - StartDIT) / CLOCKS_PER_SEC;
 
-    for (i = 0; i < len; i++)
-    {
-      if (a[i] != b[i] || a[i] != c[i] || b[i] != c[i])
-        flag = 0;
-    }
     cout << TimeofDFT[r] << " " << TimeofDIT[r] << " " << TimeofDIT[r] << endl;
 
     delete[] a;
     delete[] b;
     delete[] c;
   }
-
-  if (flag == 1)
-    cout << "All data are fit!\n";
-  else
-    cout << "All data are not fit!\n";
 
   ofstream file;
   file.open("data.txt");
